@@ -1,0 +1,388 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-graphite-950: #121110;
+  --color-graphite-900: #1a1a1a;
+  --color-graphite-800: #232221;
+  --color-graphite-700: #2e2c2a;
+  --color-graphite-600: #3d3a37;
+  --color-chalk: #f2efea;
+  --color-silver: #c0c0c0;
+  --color-ash: #8e8a85;
+  --color-copper: #ff8a2e;
+  --color-copper-deep: #e06f17;
+  --color-amber: #ffb458;
+  --color-wood: #b66a3c;
+  --color-danger: #ff7a66;
+  --color-success: #7fd4a0;
+
+  --font-sans: var(--font-onest), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-unbounded), var(--font-onest), ui-sans-serif, sans-serif;
+
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-graphite-900);
+    color-scheme: dark;
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    background: var(--color-graphite-900);
+    color: var(--color-chalk);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-copper);
+    color: var(--color-graphite-900);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  a,
+  button,
+  [role="tab"],
+  summary {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  /* Заголовки. Unbounded широкий, поэтому размеры на мобильном сдержанные. */
+  .h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2rem, 1.1rem + 4.4vw, 4.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+
+  .h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.625rem, 1.1rem + 2.3vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+
+  .h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    overflow-wrap: break-word;
+  }
+
+  .lead {
+    font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+    line-height: 1.5;
+    color: var(--color-silver);
+    max-width: 62ch;
+  }
+
+  /* Цифры в таблицах и ценах не «прыгают» по ширине. */
+  .nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Фирменный приём 2: косой срез угла, как торец стойки ресепшен. */
+  .cut {
+    --cut: 28px;
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - var(--cut) * 1.5),
+      calc(100% - var(--cut)) 100%,
+      0 100%
+    );
+  }
+
+  .cut-lg {
+    --cut: 56px;
+  }
+
+  /* Фирменный приём 3: рейки с тёплой подсветкой снизу. Только для блока-«стойки». */
+  .slats {
+    background-color: var(--color-wood);
+    background-image:
+      linear-gradient(
+        to bottom,
+        rgb(18 17 16 / 0.82) 0%,
+        rgb(18 17 16 / 0.55) 55%,
+        rgb(255 138 46 / 0.28) 100%
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent 0 14px,
+        rgb(18 17 16 / 0.7) 14px 18px
+      );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ───────── Загрузочный экран: чертёж → логотип → экран уходит вверх ───────── */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--color-graphite-950);
+  animation: preloader-exit 0.9s cubic-bezier(0.76, 0, 0.24, 1) 2.85s forwards;
+}
+
+html[data-preloader="seen"] .preloader {
+  display: none;
+}
+
+.preloader__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(255 180 88 / 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 180 88 / 0.07) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  animation: preloader-fade-out 0.8s ease 1.9s forwards;
+}
+
+.preloader__stage {
+  position: relative;
+  width: min(70vw, 520px);
+  aspect-ratio: 1172 / 847;
+}
+
+.preloader__stage > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.preloader__dims {
+  overflow: visible;
+  color: rgb(255 180 88 / 0.5);
+  opacity: 0;
+  animation:
+    preloader-fade-in 0.5s ease 0.1s forwards,
+    preloader-fade-out 0.8s ease 1.9s forwards;
+}
+
+/* Чертёж прорисовывается слева направо. */
+.preloader__sketch {
+  clip-path: inset(0 100% 0 0);
+  animation:
+    preloader-draw 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.15s forwards,
+    preloader-fade-out 0.9s ease 2s forwards;
+}
+
+/*
+ * Объёмный логотип «заливает» чертёж той же волной слева направо:
+ * мягкая маска проходит по контуру, линии постепенно становятся металлом.
+ */
+.preloader__logo {
+  mask-image: linear-gradient(90deg, #000 0 40%, transparent 60%);
+  mask-size: 260% 100%;
+  mask-position: 100% 0;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, #000 0 40%, transparent 60%);
+  -webkit-mask-size: 260% 100%;
+  -webkit-mask-position: 100% 0;
+  -webkit-mask-repeat: no-repeat;
+  animation: preloader-fill 1.35s cubic-bezier(0.45, 0, 0.25, 1) 1.2s forwards;
+}
+
+@keyframes preloader-fill {
+  to {
+    mask-position: 0 0;
+    -webkit-mask-position: 0 0;
+  }
+}
+
+.preloader__line {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--color-amber), var(--color-copper));
+  box-shadow: 0 0 16px 1px rgb(255 138 46 / 0.6);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: preloader-line 2.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes preloader-draw {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes preloader-fade-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes preloader-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes preloader-logo {
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1) saturate(1);
+  }
+}
+
+@keyframes preloader-line {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes preloader-exit {
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+
+/* ───────── Переход между страницами: жалюзи ───────── */
+.blinds {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.blinds[data-phase="cover"] {
+  pointer-events: auto;
+}
+
+.blinds > span {
+  flex: 1;
+  /* Ламели чуть перекрываются, чтобы между ними не было щелей. */
+  margin-bottom: -1px;
+  background: var(--color-graphite-950);
+  box-shadow: inset 0 -1px 0 rgb(255 138 46 / 0.35);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+.blinds[data-phase="cover"] > span {
+  transform: scaleY(1);
+  transition: transform 0.42s cubic-bezier(0.76, 0, 0.24, 1);
+  transition-delay: calc(var(--i) * 28ms);
+}
+
+.blinds[data-phase="reveal"] > span {
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.42s cubic-bezier(0.76, 0, 0.24, 1);
+  transition-delay: calc(var(--i) * 28ms);
+}
+
+/* Lenis: плавная прокрутка */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Горизонтальная карусель без полосы прокрутки */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Галочка согласия: прорисовывается при отметке */
+.check-box svg path {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 22;
+  transition: stroke-dashoffset 0.28s cubic-bezier(0.65, 0, 0.35, 1) 0.05s;
+}
+
+input:checked + .check-box {
+  background: var(--color-copper);
+  border-color: var(--color-copper);
+  box-shadow: 0 0 18px 0 rgb(255 138 46 / 0.55);
+  transform: scale(1.06);
+}
+
+input:checked + .check-box svg path {
+  stroke-dashoffset: 0;
+}
+
+input:focus-visible + .check-box {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 3px;
+}
+
+.gallery-photo-caption {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gallery-photo-caption {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  .gallery-photo-card:hover .gallery-photo-caption,
+  .gallery-photo-card:focus-visible .gallery-photo-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-photo-caption {
+    transition: none;
+  }
+}
+
+.gallery-photo-card[data-selected="true"] .gallery-photo-caption,
+.gallery-photo-card:focus-visible .gallery-photo-caption {
+  opacity: 1;
+  transform: translateY(0);
+}

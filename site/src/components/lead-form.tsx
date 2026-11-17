@@ -5,16 +5,17 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { Check, LoaderCircle } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
-import { bikes } from "@/data/bikes";
+import { rentBikes, buyoutBikes } from "@/data/bikes";
 import { GlassDatePicker } from "@/components/ui/glass-date-picker";
 import { cn } from "@/lib/cn";
+import { site } from "@/lib/site";
 import { LEAD_MODEL_EVENT } from "@/lib/lead-events";
 import { leadSchema, type LeadKind, type LeadResponse } from "@/lib/lead-schema";
 import { Button } from "./ui/button";
 
 const copy: Record<LeadKind, { submit: string; done: string }> = {
   rent: { submit: "Отправить заявку на аренду", done: "Заявка на аренду отправлена" },
-  buy: { submit: "Отправить заявку на покупку", done: "Заявка на покупку отправлена" },
+  buy: { submit: "Отправить заявку на выкуп", done: "Заявка на выкуп отправлена" },
   repair: { submit: "Отправить заявку на ремонт", done: "Заявка на ремонт отправлена" },
   contact: { submit: "Отправить сообщение", done: "Сообщение отправлено" },
 };
@@ -70,7 +71,7 @@ function Field({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-col gap-2", className)}>
+    <div className={cn("lead-field flex min-w-0 flex-col gap-2", className)}>
       <label htmlFor={htmlFor} className="text-base font-medium text-chalk">
         {label}
       </label>
@@ -167,7 +168,7 @@ export function LeadForm({
         if (result.fields) setErrors(result.fields as Errors);
         setFormError(result.error);
       } else {
-        setFormError("Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.");
+        setFormError("Не удалось отправить заявку. Попробуйте ещё раз или напишите нам в Авито.");
       }
     } catch {
       setFormError("Нет связи с сервером. Проверьте интернет и отправьте заявку ещё раз.");
@@ -191,7 +192,7 @@ export function LeadForm({
           <Check aria-hidden="true" strokeWidth={2.25} className="size-5" />
         </span>
         <p className="h3">{copy[kind].done}</p>
-        <p className="text-silver">Перезвоним в рабочее время, ежедневно с 10:00 до 22:00.</p>
+        <p className="text-silver">Перезвоним в рабочее время. {site.hours}.</p>
         <Button
           variant="secondary"
           onClick={() => {
@@ -213,19 +214,21 @@ export function LeadForm({
   return (
     <form
       ref={formRef}
+      id={withCatalog ? "zayavka" : undefined}
       onSubmit={onSubmit}
       noValidate
       className={cn(
         glass,
-        "grid gap-6 p-5 sm:grid-cols-2 sm:p-9",
+        "lead-form grid gap-6 p-5 sm:grid-cols-2 sm:p-9",
+        withCatalog && "lead-form--catalog",
         className,
       )}
     >
       {withCatalog ? (
-        <fieldset className="flex flex-col gap-3 sm:col-span-2">
+        <fieldset className="lead-models flex min-w-0 flex-col gap-3 sm:col-span-2">
           <legend className="mb-3 text-base font-medium text-chalk">Модель</legend>
           <div role="radiogroup" aria-label="Модель" className="grid grid-cols-2 gap-2.5 sm:gap-3">
-            {[...bikes.map((b) => ({ value: b.name, label: b.name, photo: b.photos[0].src })), { value: "", label: "Помогите подобрать", photo: "" }].map(
+            {[...(kind === "buy" ? buyoutBikes : rentBikes).map((b) => ({ value: b.name, label: b.name, photo: b.photos[0]?.src ?? "" })), { value: "", label: "Помогите подобрать", photo: "" }].map(
               (option, i) => {
                 const selected = model === option.value;
                 return (
@@ -241,7 +244,7 @@ export function LeadForm({
                     transition={{ duration: 0.5, delay: 0.08 * i, ease: [0.23, 1, 0.32, 1] }}
                     whileTap={{ scale: 0.97 }}
                     className={cn(
-                      "relative flex min-h-[7.5rem] flex-col justify-end overflow-hidden rounded-[8px] border p-3 text-left transition-[border-color,box-shadow] duration-200",
+                      "lead-model-card relative flex min-h-[7.5rem] flex-col justify-end overflow-hidden rounded-[8px] border p-3 text-left transition-[border-color,box-shadow] duration-200",
                       selected
                         ? "border-copper shadow-[0_0_22px_-2px_rgb(255_138_46_/_0.55)]"
                         : "border-chalk/15 hover:border-chalk/40",
@@ -282,7 +285,7 @@ export function LeadForm({
         </fieldset>
       ) : null}
 
-      <Field label="Имя" htmlFor={id("name")} error={errors.name}>
+      <Field label="Имя" htmlFor={id("name")} error={errors.name} className="lead-name">
         <input
           id={id("name")}
           name="name"
@@ -295,7 +298,7 @@ export function LeadForm({
         />
       </Field>
 
-      <Field label="Телефон" htmlFor={id("phone")} error={errors.phone}>
+      <Field label="Телефон" htmlFor={id("phone")} error={errors.phone} className="lead-phone">
         <input
           id={id("phone")}
           name="phone"
@@ -318,7 +321,7 @@ export function LeadForm({
           htmlFor={id("date")}
           error={errors.date}
           hint="Необязательно. Или выберите день в календаре"
-          className="sm:col-span-2"
+          className="lead-date sm:col-span-2"
         >
           <div className="flex flex-wrap gap-2">
             {[
@@ -407,7 +410,7 @@ export function LeadForm({
         </label>
       </div>
 
-      <div className="flex flex-col gap-2 sm:col-span-2">
+      <div className="lead-consent flex flex-col gap-2 sm:col-span-2">
         <label className="flex min-h-11 cursor-pointer items-center gap-4 text-base text-silver">
           <input
             name="consent"
@@ -442,7 +445,7 @@ export function LeadForm({
         ) : null}
       </div>
 
-      <div className="flex flex-col gap-3 sm:col-span-2">
+      <div className="lead-models flex min-w-0 flex-col gap-3 sm:col-span-2">
         <Button type="submit" size="lg" disabled={status === "sending"} className="w-full sm:w-auto sm:self-start">
           {status === "sending" ? (
             <>

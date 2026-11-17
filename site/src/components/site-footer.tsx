@@ -39,12 +39,14 @@ export function SiteFooter() {
             >
               {site.phone}
             </a>
+            {site.email ? (
             <a
               href={`mailto:${site.email}`}
               className="flex min-h-11 items-center text-chalk transition-colors duration-150 hover:text-amber"
             >
               {site.email}
             </a>
+            ) : null}
             <span className="mt-2 text-silver">{site.address}</span>
             <span className="mt-1 text-silver">{site.hours}</span>
           </address>

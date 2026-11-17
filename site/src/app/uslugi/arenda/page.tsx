@@ -10,7 +10,7 @@ import { formatPrice } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Аренда электровелосипедов",
-  description: `Электровелосипеды в аренду от ${formatPrice(minRentWeek)} в неделю. Срок от одной недели, плановое обслуживание входит в аренду. Цены за неделю и месяц, залог, условия.`,
+  description: `Wenbox U2 Pro с АКБ 60 В / 45 А·ч: 850 ₽ за день, ${formatPrice(minRentWeek)} за 7 дней, 18 000 ₽ за 30 дней. Санкт-Петербург, ул. Маршала Казакова, 29к2.`,
   alternates: { canonical: "/uslugi/arenda" },
 };
 
@@ -20,7 +20,7 @@ export default function RentPage() {
       {/* Мягкий перенос в длинном слове: на узком экране заголовок делится по слогу, а не посреди слова. */}
       <ServiceIntro
         title={"Аренда электро­велосипедов"}
-        lead="Срок аренды — от одной недели. Плановое обслуживание и замена на время ремонта уже входят в цену."
+        lead="Wenbox U2 Pro 2026 года с одной АКБ 60 В / 45 А·ч. Выберите срок: 1, 7 или 30 дней. Подготовим электровелосипед для работы в доставке."
       />
 
       <BikeCatalog mode="rent" label="Модели в аренду" />
@@ -32,13 +32,18 @@ export default function RentPage() {
           </Reveal>
           <Reveal delay={0.08}>
             <dl className="divide-y divide-graphite-700 border-y border-graphite-700">
-              {rentTerms.map((term) => (
+              {rentTerms.map((term, index) => (
                 <div
                   key={term.title}
                   className="grid gap-1.5 py-5 sm:grid-cols-[11rem_minmax(0,1fr)] sm:gap-8"
                 >
-                  <dt className="font-semibold text-chalk">{term.title}</dt>
-                  <dd className="max-w-[58ch] text-silver">{term.text}</dd>
+                  <dt className="flex items-center gap-3 font-semibold text-chalk">
+                    <span aria-hidden="true" className="nums flex size-10 shrink-0 items-center justify-center rounded-[10px] border border-copper/30 bg-copper/10 font-display text-xl font-semibold text-copper">
+                      {index + 1}
+                    </span>
+                    {term.title}
+                  </dt>
+                  <dd className="max-w-[58ch] pl-[3.25rem] text-silver sm:pl-0">{term.text}</dd>
                 </div>
               ))}
             </dl>

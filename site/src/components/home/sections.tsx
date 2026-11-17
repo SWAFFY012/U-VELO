@@ -8,7 +8,7 @@ import { MarqueeGallery } from "@/components/ui/marquee-gallery";
 import { Accordion } from "@/components/ui/accordion";
 import { Stagger, StaggerItem } from "@/components/ui/stagger";
 import { LeadForm } from "@/components/lead-form";
-import { bikes } from "@/data/bikes";
+import { bikes, bikeSpecRows } from "@/data/bikes";
 import { faq } from "@/data/faq";
 import { galleryPhotos, galleryVideos } from "@/data/gallery";
 import { formatPrice } from "@/lib/format";
@@ -17,14 +17,14 @@ import { site } from "@/lib/site";
 const sectionClass = "py-20 lg:py-28";
 
 const advantages: { icon: LucideIcon; title: string; text: string }[] = [
-  { icon: Clock, title: "Выдача за 15 минут", text: "Оформляем по паспорту и сразу выдаём электровелосипед." },
+  { icon: Clock, title: "Быстрое оформление", text: "Оформляем выкуп напрямую по договору — около 10 минут." },
   {
     icon: ShieldCheck,
-    title: "Обслуживание входит в аренду",
-    text: "Плановое обслуживание и замена на время ремонта без доплат.",
+    title: "Техническая поддержка",
+    text: "Помогаем с техническими вопросами во время аренды.",
   },
-  { icon: HandCoins, title: "Можно выкупить", text: "Арендованный электровелосипед можно оставить себе." },
-  { icon: Wrench, title: "Свой сервис и запчасти", text: "Чиним сами, не ждём поставок со стороны." },
+  { icon: HandCoins, title: "Выкуп на 26 недель", text: "Strong 350Z и Wenbox U7 без АКБ: 4 900 ₽ раз в неделю, затем велосипед ваш." },
+  { icon: Wrench, title: "Проверка перед выдачей", text: "Выдаём подготовленную технику и проверяем электровелосипед перед каждой арендой." },
 ];
 
 export function Advantages() {
@@ -59,13 +59,9 @@ export function Models() {
       <Container>
         <SectionHeading id="models-title" title="Модели в парке" />
         <div className="flex flex-col">
-          {bikes.map((bike, i) => {
+          {bikes.filter((bike) => bike.photos.length > 0).map((bike, i) => {
             const photo = bike.photos[0];
-            const specs = [
-              { label: "Запас хода", value: `${bike.specs.rangeKm} км` },
-              { label: "Аккумулятор", value: `${bike.specs.voltage} В · ${bike.specs.batteryAh} А·ч` },
-              { label: "Скорость", value: `${bike.specs.maxSpeedKmh} км/ч` },
-            ];
+            const specs = bikeSpecRows(bike).slice(0, 3);
             return (
               <Reveal key={bike.slug}>
                 <article className="grid min-h-svh content-center items-center gap-7 border-b border-graphite-700 py-24 lg:grid-cols-2 lg:gap-16">
@@ -96,11 +92,15 @@ export function Models() {
                       ))}
                     </dl>
                     <p className="nums font-display text-2xl font-semibold tracking-[-0.02em] text-amber lg:text-3xl">
-                      от {formatPrice(bike.rent.week)} в неделю
+                      {bike.rent.week !== null
+                        ? `${formatPrice(bike.rent.week)} / 7 дней`
+                        : bike.buyout
+                          ? `${formatPrice(bike.buyout.week)} / неделю выкупа`
+                          : "Условия по запросу"}
                     </p>
                     <div>
-                      <ButtonLink href="/uslugi/arenda" variant="secondary" size="lg" className="w-full sm:w-auto">
-                        Условия аренды
+                      <ButtonLink href={bike.buyout ? "/uslugi/pokupka" : bike.rent.offered ? "/uslugi/arenda" : "/kontakty"} variant="secondary" size="lg" className="w-full sm:w-auto">
+                        {bike.buyout ? "Условия выкупа" : bike.rent.offered ? "Условия аренды" : "Уточнить условия"}
                       </ButtonLink>
                     </div>
                   </div>
@@ -115,9 +115,9 @@ export function Models() {
 }
 
 const steps = [
-  "Оставляете заявку или звоните",
+  "Оставляете заявку или пишете нам",
   "Приезжаете с паспортом",
-  "Подписываем договор, вносите залог и первый платёж",
+  "Согласуем срок и комплектацию, подписываем договор",
   "Уезжаете на заряженном электровелосипеде",
 ];
 
@@ -202,8 +202,8 @@ export function Faq() {
 
 export function LeadBand() {
   return (
-    <section id="zayavka" aria-labelledby="lead-title" className="slats scroll-mt-24 py-20 lg:py-28">
-      <Container className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+    <section aria-labelledby="lead-title" className="slats scroll-mt-24 py-20 lg:py-28">
+      <Container className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-16">
         <div className="flex flex-col gap-6">
           <h2 id="lead-title" className="h2">
             Оставьте заявку, и мы подберём электровелосипед
@@ -212,7 +212,7 @@ export function LeadBand() {
           <div className="flex flex-col gap-1">
             <a
               href={site.phoneHref}
-              className="nums inline-flex min-h-11 items-center font-display text-2xl font-semibold hover:text-amber"
+              className="nums inline-flex min-h-11 items-center font-display text-xl font-semibold hover:text-amber sm:text-2xl"
             >
               {site.phone}
             </a>

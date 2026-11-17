@@ -57,7 +57,11 @@ export function PageTransition() {
   useEffect(() => {
     if (phaseRef.current !== "cover") return;
     const t1 = window.setTimeout(() => {
-      window.scrollTo(0, 0);
+      // Ссылка «Арендовать» должна открывать именно форму, а не верх страницы.
+      const anchor = window.location.hash.slice(1);
+      const target = anchor ? document.getElementById(decodeURIComponent(anchor)) : null;
+      if (target) target.scrollIntoView({ block: "start", behavior: "instant" });
+      else window.scrollTo(0, 0);
       go("reveal");
     }, 120);
     const t2 = window.setTimeout(() => go("idle"), 120 + COVER_MS + 80);

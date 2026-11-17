@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { cn } from "@/lib/cn";
 
 const MONTHS = [
@@ -43,6 +44,8 @@ export function GlassDatePicker({
   describedBy?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [mobile, setMobile] = useState(false);
+  const panel = useRef<HTMLDivElement>(null);
   const [today, setToday] = useState("");
   const [view, setView] = useState({ y: 2026, m: 0 });
   const [dir, setDir] = useState(1);
@@ -51,7 +54,7 @@ export function GlassDatePicker({
   useEffect(() => {
     if (!open) return;
     const onDown = (e: PointerEvent) => {
-      if (!root.current?.contains(e.target as Node)) setOpen(false);
+      if (!root.current?.contains(e.target as Node) && !panel.current?.contains(e.target as Node)) setOpen(false);
     };
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     document.addEventListener("pointerdown", onDown);
@@ -64,6 +67,7 @@ export function GlassDatePicker({
 
   const toggle = () => {
     if (!open) {
+      setMobile(window.matchMedia("(max-width: 639px)").matches);
       const now = new Date();
       setToday(iso(now.getFullYear(), now.getMonth(), now.getDate()));
       const base = value ? value.split("-").map(Number) : [now.getFullYear(), now.getMonth() + 1];
@@ -85,35 +89,18 @@ export function GlassDatePicker({
   const cells: (number | null)[] = [...Array(first).fill(null), ...Array.from({ length: days }, (_, i) => i + 1)];
   const canBack = today !== "" && iso(view.y, view.m, 1) > today.slice(0, 8) + "01";
 
-  return (
-    <div ref={root} className="relative">
-      <input type="hidden" name={name} value={value} />
-      <button
-        id={id}
-        type="button"
-        aria-haspopup="dialog"
-        aria-expanded={open}
-        aria-describedby={describedBy}
-        onClick={toggle}
-        className={cn(
-          "flex min-h-14 w-full items-center justify-between gap-3 rounded-[10px] border bg-chalk/[0.06] px-5 text-left text-lg transition-colors duration-150",
-          open ? "border-copper" : invalid ? "border-danger" : "border-chalk/15 hover:border-chalk/40",
-          value ? "text-chalk" : "text-ash",
-        )}
-      >
-        <span className="nums">{value ? label(value) : "Выбрать дату"}</span>
-        <CalendarDays aria-hidden="true" strokeWidth={1.75} className="size-5 text-copper" />
-      </button>
-
-      <AnimatePresence>
-        {open ? (
+  // На телефоне календарь выходит из узкой колонки формы в отдельную панель.
+  const calendar = open ? (
           <motion.div
+            ref={panel}
             role="dialog"
+            aria-modal={mobile || undefined}
             aria-label="Выбор даты"
-            initial={{ opacity: 0, y: -10, scale: 0.96, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -6, scale: 0.97, filter: "blur(6px)" }}
+            initial={{ opacity: 0, y: mobile ? "calc(-50% - 10px)" : -10, scale: 0.96, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: mobile ? "-50%" : 0, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: mobile ? "calc(-50% - 6px)" : -6, scale: 0.97, filter: "blur(6px)" }}
             transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+            style={mobile ? { position: "fixed", top: "50%", left: 20, right: 20, width: "auto", marginTop: 0, zIndex: 100 } : undefined}
             className="absolute top-full left-0 z-40 mt-3 w-full origin-top overflow-hidden rounded-[18px] border border-chalk/20 bg-[linear-gradient(145deg,rgb(46_44_42/0.97),rgb(18_17_16/0.97))] p-4 shadow-[0_30px_80px_-20px_rgb(0_0_0/0.8),inset_0_1px_0_rgb(242_239_234/0.18)] backdrop-blur-2xl backdrop-saturate-150 sm:max-w-[26rem] sm:p-5"
           >
             {/* Блик «закалённого стекла» */}
@@ -195,8 +182,31 @@ export function GlassDatePicker({
               </motion.div>
             </AnimatePresence>
           </motion.div>
-        ) : null}
-      </AnimatePresence>
+  ) : null;
+
+  return (
+    <div ref={root} className="relative">
+      <input type="hidden" name={name} value={value} />
+      <button
+        id={id}
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        aria-describedby={describedBy}
+        onClick={toggle}
+        className={cn(
+          "flex min-h-14 w-full items-center justify-between gap-3 rounded-[10px] border bg-chalk/[0.06] px-5 text-left text-lg transition-colors duration-150",
+          open ? "border-copper" : invalid ? "border-danger" : "border-chalk/15 hover:border-chalk/40",
+          value ? "text-chalk" : "text-ash",
+        )}
+      >
+        <span className="nums">{value ? label(value) : "Выбрать дату"}</span>
+        <CalendarDays aria-hidden="true" strokeWidth={1.75} className="size-5 text-copper" />
+      </button>
+
+      {mobile
+        ? createPortal(<AnimatePresence>{calendar}</AnimatePresence>, document.body)
+        : <AnimatePresence>{calendar}</AnimatePresence>}
     </div>
   );
 }

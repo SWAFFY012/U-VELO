@@ -34,16 +34,8 @@ function List({ items }: { items: React.ReactNode[] }) {
   );
 }
 
-const EmailLink = () => (
-  <a href={`mailto:${site.email}`} className={linkClass}>
-    {site.email}
-  </a>
-);
-
-const PhoneLink = () => (
-  <a href={site.phoneHref} className={`${linkClass} nums whitespace-nowrap`}>
-    {site.phone}
-  </a>
+const ContactLink = () => (
+  <a href={site.phoneHref} className={linkClass}>страницу компании в Авито</a>
 );
 
 export default function PrivacyPolicyPage() {
@@ -80,14 +72,8 @@ export default function PrivacyPolicyPage() {
             <dd className="text-chalk">{site.ogrn}</dd>
             <dt className="mt-2 text-ash sm:mt-0">Адрес</dt>
             <dd className="text-chalk">{site.address}</dd>
-            <dt className="mt-2 text-ash sm:mt-0">Почта</dt>
-            <dd>
-              <EmailLink />
-            </dd>
-            <dt className="mt-2 text-ash sm:mt-0">Телефон</dt>
-            <dd>
-              <PhoneLink />
-            </dd>
+            <dt className="mt-2 text-ash sm:mt-0">Для обращений</dt>
+            <dd><ContactLink /></dd>
           </dl>
         </Section>
 
@@ -175,7 +161,7 @@ export default function PrivacyPolicyPage() {
 
         <Section title="9. Как отозвать согласие">
           <p>
-            Напишите на <EmailLink /> или позвоните по телефону <PhoneLink />. Укажите имя и номер
+            Напишите нам через <ContactLink />. Укажите имя и номер
             телефона, которые оставляли в заявке, чтобы мы нашли ваши данные. Оператор прекратит
             обработку и удалит данные в срок, указанный в разделе 7.
           </p>

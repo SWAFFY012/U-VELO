@@ -1,7 +1,7 @@
 /**
- * Модели электровелосипедов.
- * PLACEHOLDER: цены, залог, характеристики и наличие вымышленные —
- * нужны только для вёрстки. Реальные данные возьмём с Авито.
+ * Подтверждённые сведения из скриншотов объявлений Авито, переданных 17.11.2026.
+ * null означает, что значение не опубликовано, а не нулевую цену или характеристику.
+ * Расхождения и неподтверждённые параметры — в docs/avito-data.md.
  */
 export interface BikePhoto {
   src: string;
@@ -13,21 +13,23 @@ export interface BikePhoto {
 }
 
 export interface Bike {
-  slug: "wenbox-r5" | "wenbox-u2-pro" | "strong-gs350";
+  slug: "wenbox-r5" | "wenbox-u2-pro" | "strong-gs350" | "wenbox-u7";
   name: string;
   /** Короткое описание одной строкой. */
   summary: string;
   color: string;
   specs: {
-    rangeKm: number;
-    batteryAh: number;
-    voltage: number;
-    maxSpeedKmh: number;
-    motorW: number;
-    loadKg: number;
+    rangeKm: number | null;
+    batteryAh: number | null;
+    voltage: number | null;
+    maxSpeedKmh: number | null;
+    motorW: number | null;
+    loadKg: number | null;
   };
-  rent: { week: number; month: number; deposit: number };
-  sale: { price: number; inStock: boolean; note?: string };
+  batteryNote?: string;
+  specNote?: string;
+  rent: { offered: boolean; day: number | null; week: number | null; month: number | null; deposit: number | null };
+  buyout?: { week: number; weeks: number; batteryIncluded: boolean; requirements: string[] };
   photos: BikePhoto[];
 }
 
@@ -45,9 +47,9 @@ export const bikes: Bike[] = [
     name: "Wenbox R5",
     summary: "Рабочая лошадка для доставки: багажник, дисковые тормоза, яркая фара.",
     color: "Чёрный с оранжевым",
-    specs: { rangeKm: 90, batteryAh: 30, voltage: 60, maxSpeedKmh: 45, motorW: 1000, loadKg: 150 },
-    rent: { week: 4500, month: 15000, deposit: 5000 },
-    sale: { price: 95000, inStock: true },
+    specs: { rangeKm: null, batteryAh: null, voltage: null, maxSpeedKmh: null, motorW: null, loadKg: null },
+    specNote: "Комплектацию и условия для Wenbox R5 уточняйте при обращении.",
+    rent: { offered: false, day: null, week: null, month: null, deposit: null },
     photos: [
       photo("r5-01", "Wenbox R5, вид спереди", "Wenbox R5"),
       photo("r5-02", "Wenbox R5, вид сбоку"),
@@ -64,9 +66,9 @@ export const bikes: Bike[] = [
     name: "Wenbox U2 Pro",
     summary: "Широкое сиденье со спинкой и мягкая подвеска: удобно весь день в седле.",
     color: "Зелёный с оранжевым",
-    specs: { rangeKm: 110, batteryAh: 35, voltage: 60, maxSpeedKmh: 50, motorW: 1200, loadKg: 180 },
-    rent: { week: 5200, month: 17500, deposit: 5000 },
-    sale: { price: 115000, inStock: true },
+    specs: { rangeKm: 80, batteryAh: 45, voltage: 60, maxSpeedKmh: 60, motorW: null, loadKg: null },
+    specNote: "Модель 2026 года. Один аккумулятор 60 В / 45 А·ч, вес 75 кг.",
+    rent: { offered: true, day: 850, week: 4900, month: 18000, deposit: null },
     photos: [
       photo("u2pro-01", "Wenbox U2 Pro, вид спереди", "Wenbox U2 Pro"),
       photo("u2pro-02", "Wenbox U2 Pro на дорожке, вид спереди"),
@@ -83,35 +85,63 @@ export const bikes: Bike[] = [
   },
   {
     slug: "strong-gs350",
-    name: "Strong GS350",
-    summary: "Манёвренный и заметный в потоке. USB-зарядка для телефона под рукой.",
+    name: "Strong 350Z",
+    summary: "Электровелосипед для доставки: мотор 2 000 Вт, дисковые тормоза и широкие колёса. Выкуп без аккумулятора.",
     color: "Синий с оранжевым",
-    specs: { rangeKm: 80, batteryAh: 26, voltage: 60, maxSpeedKmh: 45, motorW: 800, loadKg: 150 },
-    rent: { week: 4200, month: 14000, deposit: 5000 },
-    sale: { price: 88000, inStock: false, note: "Под заказ, 5–7 дней" },
+    specs: { rangeKm: 110, batteryAh: null, voltage: null, maxSpeedKmh: 80, motorW: 2000, loadKg: null },
+    batteryNote: "Без АКБ",
+    specNote: "Запас хода 90–110 км и скорость до 60–80 км/ч заявлены продавцом. Дальность зависит от используемой АКБ; аккумулятор в выкуп не входит.",
+    rent: { offered: false, day: null, week: null, month: null, deposit: null },
+    buyout: { week: 4900, weeks: 26, batteryIncluded: false, requirements: ["Паспорт РФ и гражданство Российской Федерации", "Отсутствие исполнительных производств и задолженностей у ФССП", "Отсутствие в чёрных списках продавца"] },
     photos: [
-      photo("gs350-01", "Strong GS350, вид спереди", "Strong GS350"),
-      photo("gs350-02", "Strong GS350, вид сбоку"),
-      photo("gs350-03", "Strong GS350, вид сзади сбоку"),
-      photo("gs350-04", "Strong GS350, вид сзади"),
-      photo("gs350-05", "Strong GS350: боковая панель и колесо"),
-      photo("gs350-06", "Strong GS350: сиденье"),
-      photo("gs350-07", "Strong GS350: дисплей и руль"),
-      photo("gs350-08", "Strong GS350: замок зажигания и USB-разъём"),
+      photo("gs350-01", "Strong 350Z, вид спереди", "Strong 350Z"),
+      photo("gs350-02", "Strong 350Z, вид сбоку"),
+      photo("gs350-03", "Strong 350Z, вид сзади сбоку"),
+      photo("gs350-04", "Strong 350Z, вид сзади"),
+      photo("gs350-05", "Strong 350Z: боковая панель и колесо"),
+      photo("gs350-06", "Strong 350Z: сиденье"),
+      photo("gs350-07", "Strong 350Z: дисплей и руль"),
+      photo("gs350-08", "Strong 350Z: замок зажигания и USB-разъём"),
     ],
+  },
+  {
+    slug: "wenbox-u7",
+    name: "Wenbox U7",
+    summary: "Выкуп без аккумулятора: фиксированный платёж раз в неделю на 26 недель. После всех платежей велосипед становится вашим.",
+    color: "Комплектация без АКБ",
+    specs: { rangeKm: 110, batteryAh: null, voltage: null, maxSpeedKmh: 80, motorW: 2000, loadKg: null },
+    batteryNote: "Без АКБ",
+    specNote: "Заявлены мотор 2 000 Вт, скорость до 60–80 км/ч и запас хода 90–110 км с подходящей АКБ. Аккумулятор в выкуп не входит.",
+    rent: { offered: false, day: null, week: null, month: null, deposit: null },
+    buyout: { week: 4900, weeks: 26, batteryIncluded: false, requirements: ["Паспорт РФ с регистрацией в Санкт-Петербурге", "Гражданство Российской Федерации", "Отсутствие исполнительных производств и задолженностей у ФССП", "Отсутствие в чёрных списках продавца"] },
+    photos: [],
   },
 ];
 
 export const bikeBySlug = (slug: string) => bikes.find((b) => b.slug === slug);
 
-/** Минимальная цена аренды за неделю — для hero и метаописаний. */
-export const minRentWeek = Math.min(...bikes.map((b) => b.rent.week));
+/** Только подтверждённые тарифы, без подстановки цен выкупа в аренду. */
+export const minRentWeek = Math.min(...bikes.flatMap((b) => b.rent.offered && b.rent.week !== null ? [b.rent.week] : []));
+export const buyoutBikes = bikes.filter((b) => b.buyout);
+export const rentBikes = bikes.filter((b) => b.rent.offered);
 
-/** PLACEHOLDER: условия аренды. */
 export const rentTerms = [
-  { title: "Документы", text: "Паспорт. Гражданам других стран — паспорт и миграционная карта." },
-  { title: "Залог", text: "От 5 000 ₽, возвращаем в день сдачи электровелосипеда." },
-  { title: "Срок", text: "От одной недели. Продлить можно по телефону или в мессенджере." },
-  { title: "Обслуживание", text: "Плановое обслуживание и замена на время ремонта входят в аренду." },
-  { title: "Выкуп", text: "Арендованный электровелосипед можно выкупить: часть платежей идёт в счёт цены." },
+  { title: "Оформление", text: "Работаем официально по договору. Комплектацию, срок и условия согласуем до выдачи." },
+  { title: "Стоимость", text: "Wenbox U2 Pro с одной АКБ 60 В / 45 А·ч: 850 ₽ за 1 день, 4 900 ₽ за 7 дней, 18 000 ₽ за 30 дней." },
+  { title: "Поддержка", text: "Помогаем с техническими вопросами во время аренды. Перед каждой выдачей проверяем электровелосипед." },
+  { title: "Выдача", text: "Санкт-Петербург, ул. Маршала Казакова, 29к2. При наличии техники выдача возможна в день обращения. Время визита согласуйте заранее." },
+  { title: "Аренда с выкупом", text: "Strong 350Z и Wenbox U7 без АКБ: 4 900 ₽ в неделю, 26 недель. Первый платёж — при заключении договора, затем один платёж в неделю. Требования к документам зависят от модели." },
 ];
+
+/** Не превращает отсутствующие данные в характеристики с нулевыми значениями. */
+export function bikeSpecRows(bike: Bike) {
+  const s = bike.specs;
+  const rows: { label: string; value: string }[] = [];
+  if (s.rangeKm !== null) rows.push({ label: "Запас хода", value: `до ${s.rangeKm} км` });
+  if (bike.batteryNote) rows.push({ label: "Аккумулятор", value: bike.batteryNote });
+  else if (s.voltage !== null && s.batteryAh !== null) rows.push({ label: "Аккумулятор", value: `${s.voltage} В · ${s.batteryAh} А·ч` });
+  if (s.maxSpeedKmh !== null) rows.push({ label: "Скорость", value: `до ${s.maxSpeedKmh} км/ч` });
+  if (s.motorW !== null) rows.push({ label: "Мотор", value: `${s.motorW.toLocaleString("ru-RU")} Вт` });
+  if (s.loadKg !== null) rows.push({ label: "Нагрузка", value: `до ${s.loadKg} кг` });
+  return rows.length ? rows : [{ label: "Комплектация", value: "По запросу" }];
+}

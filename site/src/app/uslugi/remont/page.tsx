@@ -6,15 +6,10 @@ import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { repairGroups } from "@/data/repair";
-import { formatPrice } from "@/lib/format";
-
-const minRepairPrice = Math.min(
-  ...repairGroups.flatMap((group) => group.items.map((item) => item.priceFrom)),
-);
 
 export const metadata: Metadata = {
   title: "Ремонт и обслуживание электровелосипедов",
-  description: `Ремонт электровелосипедов любых марок: электрика, ходовая, тормоза. Работы от ${formatPrice(minRepairPrice)}, цену называем после диагностики и до начала ремонта.`,
+  description: "Ремонт электровелосипедов: электрика, ходовая, тормоза. Стоимость и срок согласуем после диагностики до начала работ.",
   alternates: { canonical: "/uslugi/remont" },
 };
 
@@ -22,7 +17,7 @@ export const metadata: Metadata = {
 const steps = [
   {
     title: "Привозите электровелосипед",
-    text: "Оставьте заявку или позвоните, договоримся о времени. Берём электровелосипеды любых марок.",
+    text: "Оставьте заявку или напишите нам, договоримся о времени. Берём электровелосипеды любых марок.",
   },
   {
     title: "Диагностика и цена",
@@ -63,7 +58,7 @@ export default function RepairPage() {
             );
           })}
           <p className="max-w-[62ch] text-[0.9375rem] text-ash">
-            Цены указаны «от»: точную сумму и срок назовём после диагностики.
+            Стоимость и срок согласуем после диагностики, до начала работ.
           </p>
         </Container>
       </section>

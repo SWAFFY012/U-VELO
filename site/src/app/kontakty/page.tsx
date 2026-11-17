@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Clock, Mail, MapPin, MessageCircle, Phone, Send, type LucideIcon } from "lucide-react";
+import { Clock, MapPin, MessageCircle, type LucideIcon } from "lucide-react";
 import { LeadForm } from "@/components/lead-form";
 import { YandexMap, yandexMapsHref } from "@/components/pages/yandex-map";
-import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -10,7 +9,7 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Контакты",
-  description: `Адрес точки выдачи ${site.name}, график работы, телефон, Telegram и WhatsApp. Напишите нам через форму — перезвоним.`,
+  description: `Адрес точки выдачи ${site.name}, условия визита и связь через Авито. Напишите нам через форму — перезвоним.`,
   alternates: { canonical: "/kontakty" },
 };
 
@@ -48,7 +47,7 @@ export default function ContactsPage() {
             as="h1"
             id="contacts-title"
             title="Контакты"
-            lead="Позвоните, напишите в мессенджер или приезжайте на точку выдачи."
+            lead="Напишите нам в Авито или оставьте заявку. Перед приездом согласуйте время визита."
           />
 
           <div className="mt-12 grid items-start gap-10 lg:mt-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
@@ -60,7 +59,7 @@ export default function ContactsPage() {
                 <Row icon={Clock} label="График работы">
                   <span className="nums">{site.hours}</span>
                 </Row>
-                <Row icon={Phone} label="Телефон">
+                <Row icon={MessageCircle} label="Связь">
                   <a
                     href={site.phoneHref}
                     className="nums inline-flex min-h-11 items-center text-xl font-semibold text-chalk transition-colors duration-150 hover:text-amber"
@@ -68,36 +67,9 @@ export default function ContactsPage() {
                     {site.phone}
                   </a>
                 </Row>
-                <Row icon={Mail} label="Почта">
-                  <a href={`mailto:${site.email}`} className={`${linkClass} break-all`}>
-                    {site.email}
-                  </a>
-                </Row>
+
               </dl>
 
-              <p className="mt-8 text-[0.9375rem] text-ash">Мессенджеры</p>
-              <div className="mt-3 flex flex-wrap gap-3">
-                <ButtonLink
-                  href={site.telegram}
-                  variant="secondary"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Send aria-hidden="true" strokeWidth={1.75} className="size-[1.125rem]" />
-                  Telegram
-                  {newTabHint}
-                </ButtonLink>
-                <ButtonLink
-                  href={site.whatsapp}
-                  variant="secondary"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <MessageCircle aria-hidden="true" strokeWidth={1.75} className="size-[1.125rem]" />
-                  WhatsApp
-                  {newTabHint}
-                </ButtonLink>
-              </div>
             </address>
 
             <div className="flex flex-col gap-2">
@@ -121,7 +93,7 @@ export default function ContactsPage() {
           <SectionHeading
             id="contacts-form-title"
             title="Напишите нам"
-            lead="Оставьте имя и телефон. Перезвоним и ответим на вопрос об аренде, покупке или ремонте."
+            lead="Оставьте имя и телефон. Перезвоним и ответим на вопрос об аренде, выкупе или ремонте."
           />
           <Reveal>
             <LeadForm kind="contact" />

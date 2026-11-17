@@ -1,13 +1,9 @@
 import { cn } from "@/lib/cn";
 import { site } from "@/lib/site";
 
-const point = `${site.mapCenter.lon},${site.mapCenter.lat}`;
-
-/** Адрес виджета Яндекс Карт (весь город, без метки). */
-const widgetSrc = `https://yandex.ru/map-widget/v1/?ll=${point}&z=10`;
-
-/** Та же точка в полной версии Яндекс Карт — на случай, если виджет не загрузился. */
-export const yandexMapsHref = `https://yandex.ru/maps/?ll=${point}&z=10`;
+const query = encodeURIComponent(site.address);
+const widgetSrc = `https://yandex.ru/map-widget/v1/?text=${query}&z=16`;
+export const yandexMapsHref = `https://yandex.ru/maps/?text=${query}`;
 
 /**
  * Интерактивная Яндекс Карта. Контейнер с фиксированными пропорциями,

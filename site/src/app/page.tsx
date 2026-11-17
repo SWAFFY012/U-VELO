@@ -5,18 +5,18 @@ import { formatPrice } from "@/lib/format";
 import { site } from "@/lib/site";
 
 export default function HomePage() {
-  const maxRange = Math.max(...bikes.map((b) => b.specs.rangeKm));
+  const maxRange = Math.max(...bikes.flatMap((b) => b.specs.rangeKm === null ? [] : [b.specs.rangeKm]));
   const photo = bikes[0].photos[0];
 
   return (
     <>
       <Hero
-        lead={`Аренда от ${formatPrice(minRentWeek)} в неделю, выкуп и ремонт. Оформляем по паспорту и выдаём за 15 минут.`}
+        lead={`Аренда от ${formatPrice(minRentWeek)} в неделю, выкуп и ремонт. Работаем официально по договору.`}
         photo={{ src: "/photos/r5-01.jpg", alt: "Электровелосипед Wenbox R5, чёрный с оранжевым", width: photo.width, height: photo.height }}
         stats={[
           { value: `от ${formatPrice(minRentWeek)}`, label: "за неделю аренды" },
-          { value: "15 минут", label: "на оформление и выдачу" },
-          { value: `до ${maxRange} км`, label: "на одном заряде" },
+          { value: "10 минут", label: "на оформление выкупа" },
+          { value: `до ${maxRange} км`, label: "заявленный запас хода" },
           { value: site.hoursShort, label: "ежедневно" },
         ]}
       />

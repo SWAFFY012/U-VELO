@@ -37,9 +37,9 @@ export function Hero({
   );
 
   return (
-    <section aria-labelledby="home-title" className="overflow-hidden">
-      <div className="relative pt-24 pb-14 sm:pt-28 lg:pt-40 lg:pb-24">
-        <div className="px-5 sm:px-8 lg:absolute lg:inset-y-0 lg:right-0 lg:w-[56%] lg:px-0">
+    <section aria-labelledby="home-title" className="home-hero overflow-hidden">
+      <div className="hero-main relative pt-24 pb-14 sm:pt-28 lg:pt-40 lg:pb-24">
+        <div className="hero-photo px-5 sm:px-8 lg:absolute lg:inset-y-0 lg:right-0 lg:w-[56%] lg:px-0">
           <motion.div
             initial={still ? false : { scale: 1.04 }}
             animate={{ scale: 1 }}
@@ -71,12 +71,12 @@ export function Hero({
           </motion.div>
         </div>
 
-        <Container className="relative mt-8 lg:mt-0">
+        <Container className="hero-copy relative mt-8 lg:mt-0">
           <div className="flex flex-col gap-6 lg:w-[54%] lg:pr-6 lg:py-8">
             <div className="overflow-hidden pb-2">
               <motion.h1
                 id="home-title"
-                className="h1 lg:text-[clamp(2.25rem,3.7vw,3.25rem)]"
+                className="hero-title h1 lg:text-[clamp(2.25rem,3.7vw,3.25rem)]"
                 initial={still ? false : { y: "105%" }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.8, delay: base, ease }}
@@ -85,7 +85,7 @@ export function Hero({
               </motion.h1>
             </div>
             <motion.p
-              className="lead"
+              className="hero-lead lead"
               initial={still ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: base + 0.35, ease }}
@@ -93,7 +93,7 @@ export function Hero({
               {lead}
             </motion.p>
             <motion.div
-              className="flex flex-col gap-3 sm:flex-row"
+              className="hero-desktop-actions flex flex-col gap-3 sm:flex-row"
               initial={still ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: base + 0.45, ease }}
@@ -109,9 +109,9 @@ export function Hero({
         </Container>
       </div>
 
-      <Container className="pb-16 lg:pb-24">
+      <Container className="hero-stats pb-16 lg:pb-24">
         <motion.div
-          className="origin-left"
+          className="hero-stats-line origin-left"
           initial={still ? false : { scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1, delay: base + 0.5, ease }}
@@ -137,6 +137,14 @@ export function Hero({
             </div>
           ))}
         </dl>
+      </Container>
+      <Container className="hero-mobile-actions grid grid-cols-2 gap-2 lg:hidden">
+        <ButtonLink href="/uslugi/arenda#zayavka" className="min-h-11 px-2 text-sm">
+          Арендовать
+        </ButtonLink>
+        <ButtonLink href="#zayavka" variant="secondary" className="min-h-11 px-2 text-sm">
+          Оставить заявку
+        </ButtonLink>
       </Container>
     </section>
   );

@@ -10,8 +10,8 @@ export const site = {
   phoneHref: "https://www.avito.ru/brands/20350e59e7474f3df92fa051a43b2e9c",
   email: "", // Не предоставлена
   address: "Санкт-Петербург, ул. Маршала Казакова, 29к2",
-  hours: "Ежедневно, время визита согласуйте заранее",
-  hoursShort: "По записи",
+  hours: "Ежедневно, 10:00–19:00",
+  hoursShort: "10:00–19:00",
   telegram: "", // Не предоставлен
   whatsapp: "", // Не предоставлен
 

@@ -29,6 +29,7 @@ export interface Bike {
   batteryNote?: string;
   specNote?: string;
   rent: { offered: boolean; day: number | null; week: number | null; month: number | null; deposit: number | null };
+  buyoutOffered?: boolean;
   buyout?: { week: number; weeks: number; batteryIncluded: boolean; requirements: string[] };
   photos: BikePhoto[];
 }
@@ -49,7 +50,7 @@ export const bikes: Bike[] = [
     color: "Чёрный с оранжевым",
     specs: { rangeKm: null, batteryAh: null, voltage: null, maxSpeedKmh: null, motorW: null, loadKg: null },
     specNote: "Комплектацию и условия для Wenbox R5 уточняйте при обращении.",
-    rent: { offered: false, day: null, week: null, month: null, deposit: null },
+    rent: { offered: true, day: null, week: null, month: null, deposit: null },
     photos: [
       photo("r5-01", "Wenbox R5, вид спереди", "Wenbox R5"),
       photo("r5-02", "Wenbox R5, вид сбоку"),
@@ -69,6 +70,7 @@ export const bikes: Bike[] = [
     specs: { rangeKm: 80, batteryAh: 45, voltage: 60, maxSpeedKmh: 60, motorW: null, loadKg: null },
     specNote: "Модель 2026 года. Один аккумулятор 60 В / 45 А·ч, вес 75 кг.",
     rent: { offered: true, day: 850, week: 4900, month: 18000, deposit: null },
+    buyoutOffered: true,
     photos: [
       photo("u2pro-01", "Wenbox U2 Pro, вид спереди", "Wenbox U2 Pro"),
       photo("u2pro-02", "Wenbox U2 Pro на дорожке, вид спереди"),
@@ -91,7 +93,7 @@ export const bikes: Bike[] = [
     specs: { rangeKm: 110, batteryAh: null, voltage: null, maxSpeedKmh: 80, motorW: 2000, loadKg: null },
     batteryNote: "Без АКБ",
     specNote: "Запас хода 90–110 км и скорость до 60–80 км/ч заявлены продавцом. Дальность зависит от используемой АКБ; аккумулятор в выкуп не входит.",
-    rent: { offered: false, day: null, week: null, month: null, deposit: null },
+    rent: { offered: true, day: null, week: null, month: null, deposit: null },
     buyout: { week: 4900, weeks: 26, batteryIncluded: false, requirements: ["Паспорт РФ и гражданство Российской Федерации", "Отсутствие исполнительных производств и задолженностей у ФССП", "Отсутствие в чёрных списках продавца"] },
     photos: [
       photo("gs350-01", "Strong 350Z, вид спереди", "Strong 350Z"),
@@ -122,7 +124,8 @@ export const bikeBySlug = (slug: string) => bikes.find((b) => b.slug === slug);
 
 /** Только подтверждённые тарифы, без подстановки цен выкупа в аренду. */
 export const minRentWeek = Math.min(...bikes.flatMap((b) => b.rent.offered && b.rent.week !== null ? [b.rent.week] : []));
-export const buyoutBikes = bikes.filter((b) => b.buyout);
+// Отсутствие подтверждённой цены не означает отсутствие модели в каталоге.
+export const buyoutBikes = bikes.filter((b) => b.buyoutOffered || b.buyout);
 export const rentBikes = bikes.filter((b) => b.rent.offered);
 
 export const rentTerms = [

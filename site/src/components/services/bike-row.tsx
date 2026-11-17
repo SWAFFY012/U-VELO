@@ -16,6 +16,9 @@ function RentPrices({ rent }: { rent: Bike["rent"] }) {
     { label: "7 дней", price: rent.week },
     { label: "30 дней", price: rent.month },
   ].filter((item) => item.price !== null);
+  if (!tariffs.length) {
+    return <p className="text-lg font-semibold text-amber">Стоимость аренды — по запросу</p>;
+  }
   return (
     <dl className="grid grid-cols-2 gap-4">
       {tariffs.map((item) => (
@@ -30,7 +33,9 @@ function RentPrices({ rent }: { rent: Bike["rent"] }) {
 
 function BuyoutPrice({ bike }: { bike: Bike }) {
   const offer = bike.buyout;
-  if (!offer) return null;
+  if (!offer) {
+    return <p className="text-lg font-semibold text-amber">Условия и стоимость выкупа — по запросу</p>;
+  }
   return (
     <div className="flex flex-col gap-4">
       <dl className="grid grid-cols-2 gap-4">

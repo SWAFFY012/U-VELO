@@ -18,7 +18,7 @@ export default function BuyPage() {
     <>
       <ServiceIntro
         title={"Выкуп электро­велосипедов"}
-        lead="Strong 350Z и Wenbox U7 без аккумулятора: 4 900 ₽ в неделю на 26 недель. Работаем напрямую по договору, без банков, кредитов и поручителей."
+        lead="Для выкупа доступны Wenbox U2 Pro, Strong 350Z и Wenbox U7. Для Strong 350Z и U7 без АКБ — 4 900 ₽ в неделю на 26 недель. Условия выкупа U2 Pro уточним при обращении."
       />
 
       <BikeCatalog mode="buy" label="Модели для выкупа" />

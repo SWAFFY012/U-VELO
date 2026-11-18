@@ -21,7 +21,7 @@ export const galleryPhotos: BikePhoto[] = [
     description: "Электровелосипеды Wenbox для аренды и покупки.",
   },
   ...pick("wenbox-u2-pro", [1, 3]),
-  ...pick("wenbox-r5", [1, 6]),
+  ...pick("wenbox-u2", [1, 6]),
   ...pick("strong-gs350", [0, 4]),
   {
     src: "/photos/fleet-02.jpg",

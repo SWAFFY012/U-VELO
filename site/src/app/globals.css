@@ -175,7 +175,7 @@ html[data-preloader="seen"] .preloader {
 .preloader__stage {
   position: relative;
   width: min(70vw, 520px);
-  aspect-ratio: 1172 / 847;
+  aspect-ratio: 930 / 274;
 }
 
 .preloader__stage > * {

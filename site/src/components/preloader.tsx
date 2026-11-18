@@ -1,3 +1,5 @@
+import { brandLogo, Logo } from "@/components/ui/logo";
+
 /**
  * Загрузочный экран: чертёж логотипа «прорисовывается», затем превращается
  * в объёмный логотип, и экран уходит вверх. Около 3,5 секунды, при каждой загрузке сайта.
@@ -17,20 +19,26 @@ export function Preloader() {
       <div className="preloader__grid" />
       <div className="preloader__stage">
         {/* Размерные линии чертежа */}
-        <svg className="preloader__dims" viewBox="0 0 1172 847" fill="none">
+        <svg className="preloader__dims" viewBox="0 0 930 274" fill="none">
           <g stroke="currentColor" strokeWidth="1.5">
-            <path d="M40 -40H1132M40 -58V-22M1132 -58V-22" />
-            <path d="M-48 30V820M-66 30H-30M-66 820H-30" />
-            <path d="M586 -90V940" strokeDasharray="14 10" opacity=".55" />
-            <path d="M-120 423H1290" strokeDasharray="14 10" opacity=".55" />
-            <circle cx="790" cy="300" r="268" strokeDasharray="6 10" opacity=".5" />
-            <circle cx="790" cy="300" r="150" strokeDasharray="6 10" opacity=".5" />
+            <path d="M54 -36H906M54 -48V-24M906 -48V-24" />
+            <path d="M-34 26V242M-46 26H-22M-46 242H-22" />
+            <path d="M226 -72V346M-64 134H994" strokeDasharray="14 10" opacity=".55" />
+            <circle cx="226" cy="134" r="118" strokeDasharray="6 10" opacity=".5" />
           </g>
         </svg>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="preloader__sketch" src="/logo-sketch.png" alt="" width={1172} height={847} />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="preloader__logo" src="/logo.png" alt="" width={1172} height={847} />
+        <svg className="preloader__sketch" viewBox="0 0 930 274">
+          <defs>
+            <filter id="preloader-logo-outline">
+              <feMorphology in="SourceAlpha" operator="erode" radius="3" result="inside" />
+              <feComposite in="SourceAlpha" in2="inside" operator="out" result="outline" />
+              <feFlood floodColor="#ffb458" />
+              <feComposite in2="outline" operator="in" />
+            </filter>
+          </defs>
+          <image href={brandLogo.src} width={brandLogo.width} height={brandLogo.height} filter="url(#preloader-logo-outline)" />
+        </svg>
+        <Logo className="preloader__logo" eager decorative />
       </div>
       <span className="preloader__line" />
     </div>

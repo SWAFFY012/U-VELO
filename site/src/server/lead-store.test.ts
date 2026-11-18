@@ -23,7 +23,7 @@ function record(overrides: Partial<LeadRecord> = {}): LeadRecord {
     kind: "rent",
     name: "Иван",
     phone: "+79001234567",
-    model: "Wenbox R5",
+    model: "Wenbox U2",
     date: "2026-11-20",
     message: "",
     page: "/uslugi/arenda",

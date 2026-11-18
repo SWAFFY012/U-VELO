@@ -57,7 +57,7 @@ export function SiteHeader() {
             }
           }}
         >
-          <Logo eager className="h-[4.75rem]" />
+          <Logo eager />
         </Link>
 
         <nav aria-label="Основное меню" className="hidden flex-1 px-6 xl:block 2xl:px-12">

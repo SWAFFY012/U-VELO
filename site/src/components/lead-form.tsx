@@ -375,7 +375,7 @@ export function LeadForm({
             id={id("model")}
             name="model"
             type="text"
-            placeholder="Например, Wenbox R5"
+            placeholder="Например, Wenbox U2"
             aria-invalid={Boolean(errors.model)}
             aria-describedby={describe("model")}
             className={fieldClass}

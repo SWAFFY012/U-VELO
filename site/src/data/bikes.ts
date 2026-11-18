@@ -13,7 +13,7 @@ export interface BikePhoto {
 }
 
 export interface Bike {
-  slug: "wenbox-r5" | "wenbox-u2-pro" | "strong-gs350" | "wenbox-u7";
+  slug: "wenbox-u2" | "wenbox-u2-pro" | "strong-gs350" | "wenbox-u7";
   name: string;
   /** Короткое описание одной строкой. */
   summary: string;
@@ -44,22 +44,22 @@ const photo = (file: string, alt: string, caption?: string): BikePhoto => ({
 
 export const bikes: Bike[] = [
   {
-    slug: "wenbox-r5",
-    name: "Wenbox R5",
+    slug: "wenbox-u2",
+    name: "Wenbox U2",
     summary: "Рабочая лошадка для доставки: багажник, дисковые тормоза, яркая фара.",
     color: "Чёрный с оранжевым",
     specs: { rangeKm: null, batteryAh: null, voltage: null, maxSpeedKmh: null, motorW: null, loadKg: null },
-    specNote: "Комплектацию и условия для Wenbox R5 уточняйте при обращении.",
+    specNote: "Комплектацию и условия для Wenbox U2 уточняйте при обращении.",
     rent: { offered: true, day: null, week: null, month: null, deposit: null },
     photos: [
-      photo("r5-01", "Wenbox R5, вид спереди", "Wenbox R5"),
-      photo("r5-02", "Wenbox R5, вид сбоку"),
-      photo("r5-03", "Wenbox R5, вид сзади сбоку"),
-      photo("r5-04", "Wenbox R5, вид сзади"),
-      photo("r5-05", "Wenbox R5: сиденье и багажник"),
-      photo("r5-06", "Wenbox R5: переднее колесо и дисковый тормоз"),
-      photo("r5-07", "Wenbox R5: светодиодная фара"),
-      photo("r5-08", "Wenbox R5: дисплей на руле"),
+      photo("r5-01", "Wenbox U2, вид спереди", "Wenbox U2"),
+      photo("r5-02", "Wenbox U2, вид сбоку"),
+      photo("r5-03", "Wenbox U2, вид сзади сбоку"),
+      photo("r5-04", "Wenbox U2, вид сзади"),
+      photo("r5-05", "Wenbox U2: сиденье и багажник"),
+      photo("r5-06", "Wenbox U2: переднее колесо и дисковый тормоз"),
+      photo("r5-07", "Wenbox U2: светодиодная фара"),
+      photo("r5-08", "Wenbox U2: дисплей на руле"),
     ],
   },
   {

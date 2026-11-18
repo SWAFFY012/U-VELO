@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import { rentBikes, buyoutBikes, minRentWeek } from "./bikes.ts";
 
 test("каталог аренды сохраняет все три модели, включая тарифы по запросу", () => {
-  assert.deepEqual(rentBikes.map((bike) => bike.name), ["Wenbox R5", "Wenbox U2 Pro", "Strong 350Z"]);
-  assert.equal(rentBikes.find((bike) => bike.slug === "wenbox-r5")?.rent.week, null);
+  assert.deepEqual(rentBikes.map((bike) => bike.name), ["Wenbox U2", "Wenbox U2 Pro", "Strong 350Z"]);
+  assert.equal(rentBikes.find((bike) => bike.slug === "wenbox-u2")?.rent.week, null);
   assert.equal(minRentWeek, 4900);
 });
 

@@ -9,7 +9,7 @@ export function SiteFooter() {
       <Container className="grid gap-12 py-14 md:grid-cols-[1.3fr_1fr_1fr] lg:py-16">
         <div className="flex flex-col gap-5">
           <Link href="/" aria-label={`${site.name} — на главную`} className="self-start">
-            <Logo className="h-24" />
+            <Logo className="w-48" />
           </Link>
           <p className="max-w-[34ch] text-silver">{site.tagline}.</p>
         </div>

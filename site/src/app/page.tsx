@@ -12,7 +12,7 @@ export default function HomePage() {
     <>
       <Hero
         lead={`Аренда от ${formatPrice(minRentWeek)} в неделю, выкуп и ремонт. Работаем официально по договору.`}
-        photo={{ src: "/photos/r5-01.jpg", alt: "Электровелосипед Wenbox R5, чёрный с оранжевым", width: photo.width, height: photo.height }}
+        photo={photo}
         stats={[
           { value: `от ${formatPrice(minRentWeek)}`, label: "за неделю аренды" },
           { value: "10 минут", label: "на оформление выкупа" },

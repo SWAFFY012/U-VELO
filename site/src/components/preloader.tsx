@@ -29,6 +29,9 @@ export function Preloader() {
         </svg>
         <svg className="preloader__sketch" viewBox="0 0 930 274">
           <defs>
+            <clipPath id="preloader-wordmark">
+              <rect x="360" y="0" width="570" height="274" />
+            </clipPath>
             <filter id="preloader-logo-outline">
               <feMorphology in="SourceAlpha" operator="erode" radius="3" result="inside" />
               <feComposite in="SourceAlpha" in2="inside" operator="out" result="outline" />
@@ -36,7 +39,14 @@ export function Preloader() {
               <feComposite in2="outline" operator="in" />
             </filter>
           </defs>
-          <image href={brandLogo.src} width={brandLogo.width} height={brandLogo.height} filter="url(#preloader-logo-outline)" />
+          {/* Геометрический контур знака исключает свечение из линий чертежа. */}
+          <g fill="none" stroke="#ffb458" strokeWidth="2" strokeLinejoin="miter">
+            <path d="M54 32H96V104L151 104L126 129H241L96 169V232H54Z" />
+            <path d="M128 88A108 108 0 1 1 128 180L158 166A76 76 0 1 0 158 102Z" />
+          </g>
+          <g clipPath="url(#preloader-wordmark)">
+            <image href={brandLogo.src} width={brandLogo.width} height={brandLogo.height} filter="url(#preloader-logo-outline)" />
+          </g>
         </svg>
         <Logo className="preloader__logo" eager decorative />
       </div>

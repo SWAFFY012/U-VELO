@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { BikeCatalog } from "@/components/services/bike-catalog";
-import { FormSection } from "@/components/services/form-section";
+import { LeadBand } from "@/components/home/sections";
 import { ServiceIntro } from "@/components/services/service-intro";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
@@ -51,11 +51,7 @@ export default function RentPage() {
         </Container>
       </section>
 
-      <FormSection
-        kind="rent"
-        title="Заявка на аренду"
-        text="Выберите модель и оставьте телефон. Перезвоним, ответим на вопросы и договоримся, когда вы заберёте электровелосипед."
-      />
+      <LeadBand />
     </>
   );
 }

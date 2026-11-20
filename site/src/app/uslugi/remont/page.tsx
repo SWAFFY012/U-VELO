@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { FormSection } from "@/components/services/form-section";
+import { LeadBand } from "@/components/home/sections";
 import { RepairTable } from "@/components/services/repair-table";
 import { ServiceIntro } from "@/components/services/service-intro";
 import { Container } from "@/components/ui/container";
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 const steps = [
   {
     title: "Привозите электровелосипед",
-    text: "Оставьте заявку или напишите нам, договоримся о времени. Берём электровелосипеды любых марок.",
+    text: "Свяжитесь с нами, договоримся о времени. Берём электровелосипеды любых марок.",
   },
   {
     title: "Диагностика и цена",
@@ -89,11 +89,7 @@ export default function RepairPage() {
         </Container>
       </section>
 
-      <FormSection
-        kind="repair"
-        title="Заявка на ремонт"
-        text="Опишите, что случилось. Перезвоним, подскажем примерную цену и срок и договоримся, когда привезти электровелосипед."
-      />
+      <LeadBand />
     </>
   );
 }

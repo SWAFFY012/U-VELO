@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
-import { Clock, MapPin, MessageCircle, type LucideIcon } from "lucide-react";
-import { LeadForm } from "@/components/lead-form";
+import { Clock, MapPin, MessageCircle, Phone, type LucideIcon } from "lucide-react";
 import { YandexMap, yandexMapsHref } from "@/components/pages/yandex-map";
 import { Container } from "@/components/ui/container";
-import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Контакты",
-  description: `Адрес точки выдачи ${site.name}, условия визита и связь через Авито. Напишите нам через форму — перезвоним.`,
+  description: `Адрес точки выдачи ${site.name}, условия визита и связь через Авито. Свяжитесь с нами, чтобы уточнить наличие и время визита.`,
   alternates: { canonical: "/kontakty" },
 };
 
@@ -41,13 +39,13 @@ const newTabHint = <span className="sr-only">, откроется в новой 
 export default function ContactsPage() {
   return (
     <>
-      <section aria-labelledby="contacts-title">
+      <section aria-labelledby="contacts-title" className="slats">
         <Container className="pt-32 pb-16 lg:pt-40 lg:pb-24">
           <SectionHeading
             as="h1"
             id="contacts-title"
             title="Контакты"
-            lead="Напишите нам в Авито или оставьте заявку. Перед приездом согласуйте время визита."
+            lead="Свяжитесь с нами по вопросам аренды, выкупа или ремонта. Перед приездом согласуйте время визита."
           />
 
           <div className="mt-12 grid items-start gap-10 lg:mt-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
@@ -58,6 +56,10 @@ export default function ContactsPage() {
                 </Row>
                 <Row icon={Clock} label="График работы">
                   <span className="nums">{site.hours}</span>
+                </Row>
+                <Row icon={Phone} label="Телефон">
+                  <span id="phone" className="nums text-xl font-semibold">+7 (___) ___-__-__</span>
+                  <span className="block text-sm text-silver">Номер скоро появится. Пока напишите нам в Авито.</span>
                 </Row>
                 <Row icon={MessageCircle} label="Связь">
                   <a
@@ -88,18 +90,7 @@ export default function ContactsPage() {
         </Container>
       </section>
 
-      <section aria-labelledby="contacts-form-title" className="slats">
-        <Container className="grid items-start gap-10 py-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16 lg:py-24">
-          <SectionHeading
-            id="contacts-form-title"
-            title="Напишите нам"
-            lead="Оставьте имя и телефон. Перезвоним и ответим на вопрос об аренде, выкупе или ремонте."
-          />
-          <Reveal>
-            <LeadForm kind="contact" />
-          </Reveal>
-        </Container>
-      </section>
+
     </>
   );
 }

@@ -7,12 +7,10 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { MarqueeGallery } from "@/components/ui/marquee-gallery";
 import { Accordion } from "@/components/ui/accordion";
 import { Stagger, StaggerItem } from "@/components/ui/stagger";
-import { LeadForm } from "@/components/lead-form";
 import { bikes, bikeSpecRows } from "@/data/bikes";
 import { faq } from "@/data/faq";
 import { galleryPhotos, galleryVideos } from "@/data/gallery";
 import { formatPrice } from "@/lib/format";
-import { site } from "@/lib/site";
 
 const sectionClass = "py-20 lg:py-28";
 
@@ -115,7 +113,7 @@ export function Models() {
 }
 
 const steps = [
-  "Оставляете заявку или пишете нам",
+  "Связываетесь с нами",
   "Приезжаете с паспортом",
   "Согласуем срок и комплектацию, подписываем договор",
   "Уезжаете на заряженном электровелосипеде",
@@ -202,26 +200,11 @@ export function Faq() {
 
 export function LeadBand() {
   return (
-    <section aria-labelledby="lead-title" className="slats scroll-mt-24 py-20 lg:py-28">
-      <Container className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-16">
-        <div className="flex flex-col gap-6">
-          <h2 id="lead-title" className="h2">
-            Оставьте заявку, и мы подберём электровелосипед
-          </h2>
-          <p className="lead text-chalk">Перезвоним, уточним срок и модель и подготовим договор к вашему приезду.</p>
-          <div className="flex flex-col gap-1">
-            <a
-              href={site.phoneHref}
-              className="nums inline-flex min-h-11 items-center font-display text-xl font-semibold hover:text-amber sm:text-2xl"
-            >
-              {site.phone}
-            </a>
-            <p className="text-chalk">{site.hours}</p>
-          </div>
-        </div>
-        <Reveal className="relative z-10">
-          <LeadForm kind="rent" />
-        </Reveal>
+    <section className="py-20 lg:py-28">
+      <Container className="flex flex-col items-start gap-6">
+        <h2 className="h2">Связаться с нами</h2>
+        <p className="lead">Поможем выбрать электровелосипед и ответим на вопросы об аренде, выкупе и ремонте.</p>
+        <ButtonLink href="/kontakty" size="lg">Связаться с нами</ButtonLink>
       </Container>
     </section>
   );

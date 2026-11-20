@@ -1,4 +1,4 @@
-import { PickModelButton } from "@/components/pick-model-button";
+import { ButtonLink } from "@/components/ui/button";
 import type { Bike } from "@/data/bikes";
 import { cn } from "@/lib/cn";
 import { formatPrice } from "@/lib/format";
@@ -94,9 +94,9 @@ export function BikeRow({
 
         <div className="mt-8 flex flex-col gap-7 lg:mt-auto lg:pt-8">
           {mode === "rent" ? <RentPrices rent={bike.rent} /> : <BuyoutPrice bike={bike} />}
-          <PickModelButton model={bike.name} className="min-h-13 w-full px-7 text-base sm:w-auto sm:self-start">
-            {mode === "rent" ? "Арендовать" : "Оформить выкуп"}
-          </PickModelButton>
+          <ButtonLink href="/kontakty" className="min-h-13 w-full px-7 text-base sm:w-auto sm:self-start">
+            Связаться с нами
+          </ButtonLink>
         </div>
       </div>
     </article>

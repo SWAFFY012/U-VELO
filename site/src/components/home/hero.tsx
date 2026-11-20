@@ -98,11 +98,11 @@ export function Hero({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: base + 0.45, ease }}
             >
-              <ButtonLink href="/uslugi/arenda#zayavka" size="lg">
+              <ButtonLink href="/uslugi/arenda" size="lg">
                 Арендовать
               </ButtonLink>
-              <ButtonLink href="#zayavka" variant="secondary" size="lg">
-                Оставить заявку
+              <ButtonLink href="/kontakty" variant="secondary" size="lg">
+                Связаться с нами
               </ButtonLink>
             </motion.div>
           </div>
@@ -139,11 +139,11 @@ export function Hero({
         </dl>
       </Container>
       <Container className="hero-mobile-actions grid grid-cols-2 gap-2 lg:hidden">
-        <ButtonLink href="/uslugi/arenda#zayavka" className="min-h-11 px-2 text-sm">
+        <ButtonLink href="/kontakty" className="min-h-11 px-2 text-sm">
           Арендовать
         </ButtonLink>
-        <ButtonLink href="#zayavka" variant="secondary" className="min-h-11 px-2 text-sm">
-          Оставить заявку
+        <ButtonLink href="/kontakty" variant="secondary" className="min-h-11 px-2 text-sm">
+          Связаться с нами
         </ButtonLink>
       </Container>
     </section>

@@ -87,8 +87,8 @@ export function SiteHeader() {
             <Phone aria-hidden="true" strokeWidth={1.75} className="size-4 text-copper" />
             {site.phone}
           </a>
-          <ButtonLink href="/uslugi/arenda#zayavka" className="hidden sm:inline-flex">
-            Арендовать
+          <ButtonLink href="/kontakty" className="hidden sm:inline-flex">
+            Связаться с нами
           </ButtonLink>
           <button
             type="button"
@@ -136,8 +136,8 @@ export function SiteHeader() {
               ))}
             </ul>
             <div className="mt-8 flex flex-col gap-3">
-              <ButtonLink href="/uslugi/arenda#zayavka" size="lg" onClick={close}>
-                Арендовать
+              <ButtonLink href="/kontakty" size="lg" onClick={close}>
+                Связаться с нами
               </ButtonLink>
               <ButtonLink href={site.phoneHref} variant="secondary" size="lg" className="nums">
                 <Phone aria-hidden="true" strokeWidth={1.75} className="size-4" />

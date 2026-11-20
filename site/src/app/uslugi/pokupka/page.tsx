@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { BikeCatalog } from "@/components/services/bike-catalog";
-import { FormSection } from "@/components/services/form-section";
+import { LeadBand } from "@/components/home/sections";
 import { ServiceIntro } from "@/components/services/service-intro";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -43,11 +43,7 @@ export default function BuyPage() {
         </Container>
       </section>
 
-      <FormSection
-        kind="buy"
-        title="Заявка на выкуп"
-        text="Выберите модель и оставьте телефон. Проверим наличие, расскажем о требованиях и согласуем оформление договора."
-      />
+      <LeadBand />
     </>
   );
 }

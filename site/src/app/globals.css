@@ -197,24 +197,30 @@ html[data-preloader="seen"] .preloader {
 /* Чертёж прорисовывается слева направо. */
 .preloader__sketch {
   clip-path: inset(0 100% 0 0);
+  mask-image: linear-gradient(90deg, transparent 0 40%, #000 60%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0 40%, #000 60%);
   animation:
     preloader-draw 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.15s forwards,
-    preloader-fade-out 0.9s ease 2s forwards;
+    preloader-fill 1.35s cubic-bezier(0.45, 0, 0.25, 1) 1.2s forwards;
 }
 
 /*
  * Объёмный логотип «заливает» чертёж той же волной слева направо:
  * мягкая маска проходит по контуру, линии постепенно становятся металлом.
  */
+.preloader__sketch,
 .preloader__logo {
-  mask-image: linear-gradient(90deg, #000 0 40%, transparent 60%);
   mask-size: 260% 100%;
   mask-position: 100% 0;
   mask-repeat: no-repeat;
-  -webkit-mask-image: linear-gradient(90deg, #000 0 40%, transparent 60%);
   -webkit-mask-size: 260% 100%;
   -webkit-mask-position: 100% 0;
   -webkit-mask-repeat: no-repeat;
+}
+
+.preloader__logo {
+  mask-image: linear-gradient(90deg, #000 0 40%, transparent 60%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0 40%, transparent 60%);
   animation: preloader-fill 1.35s cubic-bezier(0.45, 0, 0.25, 1) 1.2s forwards;
 }
 
@@ -622,19 +628,4 @@ input:focus-visible + .check-box {
   .lead-form--catalog .lead-phone input {
     padding-inline: 8px;
   }
-}
-
-.location-map .leaflet-control-attribution {
-  font-size: 10px;
-  line-height: 1.5;
-}
-
-.location-map .leaflet-control-zoom a {
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-}
-
-.location-map__marker {
-  filter: drop-shadow(0 3px 3px rgb(0 0 0 / 0.25));
 }

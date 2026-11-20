@@ -1,15 +1,14 @@
 import { cn } from "@/lib/cn";
 import { site } from "@/lib/site";
 
-const query = encodeURIComponent(site.address);
-const widgetSrc = `https://yandex.ru/map-widget/v1/?text=${query}&ll=30.107619%2C59.836016&pt=30.107619%2C59.836016%2Cpm2rdm&z=17`;
+const widgetSrc = "https://www.openstreetmap.org/export/embed.html?bbox=30.102119%2C59.833516%2C30.113119%2C59.838516&layer=mapnik&marker=59.836016%2C30.107619";
 export const yandexMapsHref = site.mapsHref;
 
 /**
- * Интерактивная Яндекс Карта. Контейнер с фиксированными пропорциями,
+ * Карта OpenStreetMap с меткой адреса. Контейнер с фиксированными пропорциями,
  * чтобы страница не прыгала, пока виджет загружается.
  */
-export function YandexMap({ className }: { className?: string }) {
+export function LocationMap({ className }: { className?: string }) {
   return (
     <div
       className={cn(
@@ -19,7 +18,7 @@ export function YandexMap({ className }: { className?: string }) {
     >
       <iframe
         src={widgetSrc}
-        title={`${site.name} на Яндекс Картах: ${site.address}`}
+        title={`${site.name} на карте OpenStreetMap: ${site.address}`}
         loading="lazy"
         allowFullScreen
         className="absolute inset-0 size-full border-0"

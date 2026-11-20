@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Clock, MapPin, MessageCircle, Phone, type LucideIcon } from "lucide-react";
-import { YandexMap, yandexMapsHref } from "@/components/pages/yandex-map";
+import { LocationMap, yandexMapsHref } from "@/components/pages/yandex-map";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { site } from "@/lib/site";
@@ -74,7 +74,7 @@ export default function ContactsPage() {
             </address>
 
             <div className="flex flex-col gap-2">
-              <YandexMap />
+              <LocationMap />
               <a
                 href={yandexMapsHref}
                 target="_blank"

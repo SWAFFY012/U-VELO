@@ -1,4 +1,4 @@
-/** Адрес подтверждён скриншотами Авито. Телефон, почта и мессенджеры не предоставлены. */
+/** Адрес уточнён заказчиком 20.11.2026. Телефон, почта и мессенджеры не предоставлены. */
 export const site = {
   name: "Ю-Вело",
   legalName: "ООО «Ю-ВЕЛО»",
@@ -9,7 +9,8 @@ export const site = {
   phone: "Связаться в Авито",
   phoneHref: "https://www.avito.ru/brands/20350e59e7474f3df92fa051a43b2e9c",
   email: "", // Не предоставлена
-  address: "Санкт-Петербург, ул. Маршала Казакова, 29к2",
+  address: "Санкт-Петербург, проспект Ветеранов, 202",
+  mapsHref: "https://yandex.ru/maps/2/saint-petersburg/house/prospekt_veteranov_202/Z0kYdwdnTEwDQFtjfXRyd35gZw==/?ll=30.107619%2C59.836016&z=20.36",
   hours: "Ежедневно, 10:00–19:00",
   hoursShort: "10:00–19:00",
   telegram: "", // Не предоставлен

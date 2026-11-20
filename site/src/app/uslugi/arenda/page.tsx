@@ -10,7 +10,7 @@ import { formatPrice } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Аренда электровелосипедов",
-  description: `Wenbox U2 Pro с АКБ 60 В / 45 А·ч: 850 ₽ за день, ${formatPrice(minRentWeek)} за 7 дней, 18 000 ₽ за 30 дней. Санкт-Петербург, ул. Маршала Казакова, 29к2.`,
+  description: `Wenbox U2 Pro с АКБ 60 В / 45 А·ч: 850 ₽ за день, ${formatPrice(minRentWeek)} за 7 дней, 18 000 ₽ за 30 дней. Санкт-Петербург, проспект Ветеранов, 202.`,
   alternates: { canonical: "/uslugi/arenda" },
 };
 

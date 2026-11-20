@@ -39,6 +39,10 @@ export function SiteFooter() {
             >
               {site.phone}
             </a>
+            <a href={site.telegram} target="_blank" rel="noopener noreferrer" className="flex min-h-11 items-center text-chalk transition-colors duration-150 hover:text-amber">
+              Telegram @U_Velo
+              <span className="sr-only">, откроется в новой вкладке</span>
+            </a>
             {site.email ? (
             <a
               href={`mailto:${site.email}`}

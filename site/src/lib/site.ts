@@ -14,7 +14,7 @@ export const site = {
   mapsHref: "https://yandex.ru/maps/2/saint-petersburg/house/prospekt_veteranov_202/Z0kYdwdnTEwDQFtjfXRyd35gZw==/?ll=30.107619%2C59.836016&z=20.36",
   hours: "Ежедневно, 10:00–19:00",
   hoursShort: "10:00–19:00",
-  telegram: "", // Не предоставлен
+  telegram: "https://t.me/U_Velo",
   whatsapp: "", // Не предоставлен
 
 } as const;

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Clock, MapPin, MessageCircle, Phone, type LucideIcon } from "lucide-react";
+import { Clock, MapPin, MessageCircle, Phone, Send, type LucideIcon } from "lucide-react";
 import { LocationMap } from "@/components/pages/yandex-map";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -63,6 +63,12 @@ export default function ContactsPage() {
                 </Row>
                 <Row icon={Phone} label="Телефон">
                   <a id="phone" href={site.phoneHref} className={linkClass}>{site.phone}</a>
+                </Row>
+                <Row icon={Send} label="Telegram">
+                  <a href={site.telegram} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                    @U_Velo
+                    {newTabHint}
+                  </a>
                 </Row>
                 <Row icon={MessageCircle} label="Связь">
                   <a

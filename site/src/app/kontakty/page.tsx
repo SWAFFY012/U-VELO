@@ -7,7 +7,7 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Контакты",
-  description: `Адрес точки выдачи ${site.name}, условия визита и связь через Авито. Свяжитесь с нами, чтобы уточнить наличие и время визита.`,
+  description: `Адрес точки выдачи ${site.name}, условия визита, телефон и связь через Авито. Свяжитесь с нами, чтобы уточнить наличие и время визита.`,
   alternates: { canonical: "/kontakty" },
 };
 
@@ -58,15 +58,14 @@ export default function ContactsPage() {
                   <span className="nums">{site.hours}</span>
                 </Row>
                 <Row icon={Phone} label="Телефон">
-                  <span id="phone" className="nums text-xl font-semibold">+7 (___) ___-__-__</span>
-                  <span className="block text-sm text-silver">Номер скоро появится. Пока напишите нам в Авито.</span>
+                  <a id="phone" href={site.phoneHref} className={linkClass}>{site.phone}</a>
                 </Row>
                 <Row icon={MessageCircle} label="Связь">
                   <a
-                    href={site.phoneHref}
+                    href={site.avitoHref}
                     className="nums inline-flex min-h-11 items-center text-xl font-semibold text-chalk transition-colors duration-150 hover:text-amber"
                   >
-                    {site.phone}
+                    Написать в Авито
                   </a>
                 </Row>
 

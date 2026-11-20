@@ -1,4 +1,4 @@
-import { brandLogo, Logo } from "@/components/ui/logo";
+import { Logo } from "@/components/ui/logo";
 
 /**
  * Загрузочный экран: чертёж логотипа «прорисовывается», затем превращается
@@ -28,24 +28,24 @@ export function Preloader() {
           </g>
         </svg>
         <svg className="preloader__sketch" viewBox="0 0 930 274">
-          <defs>
-            <clipPath id="preloader-wordmark">
-              <rect x="360" y="0" width="570" height="274" />
-            </clipPath>
-            <filter id="preloader-logo-outline">
-              <feMorphology in="SourceAlpha" operator="erode" radius="3" result="inside" />
-              <feComposite in="SourceAlpha" in2="inside" operator="out" result="outline" />
-              <feFlood floodColor="#ffb458" />
-              <feComposite in2="outline" operator="in" />
-            </filter>
-          </defs>
           {/* Геометрический контур знака исключает свечение из линий чертежа. */}
           <g fill="none" stroke="#ffb458" strokeWidth="2" strokeLinejoin="miter">
             <path d="M54 32H96V104L151 104L126 129H241L96 169V232H54Z" />
             <path d="M128 88A108 108 0 1 1 128 180L158 166A76 76 0 1 0 158 102Z" />
           </g>
-          <g clipPath="url(#preloader-wordmark)">
-            <image href={brandLogo.src} width={brandLogo.width} height={brandLogo.height} filter="url(#preloader-logo-outline)" />
+          {/* Чистые контуры надписи той же толщины, что и знак. */}
+          <g transform="translate(15 0) scale(0.96 1)" fill="none" stroke="#ffb458" strokeWidth="2" strokeLinejoin="round">
+            <path d="M372 62H393V95H409C414 70 430 60 455 60C487 60 506 77 506 106C506 135 487 152 455 152C430 152 414 140 409 116H393V150H372Z" />
+            <ellipse cx="455" cy="106" rx="29" ry="26" />
+            <path d="M520 98H553V115H520Z" />
+            <path d="M570 62H625C649 62 662 70 662 86C662 96 657 102 647 106C660 109 667 117 667 128C667 144 652 151 627 151H570Z
+                     M591 79V97H623C634 97 640 94 640 88C640 82 634 79 623 79Z
+                     M591 114V134H626C639 134 645 131 645 124C645 117 639 114 626 114Z" />
+            <path d="M758 122H696C699 133 707 137 720 137C731 137 739 134 746 128L758 140C747 149 735 153 720 153C692 153 675 139 675 116C675 93 692 79 718 79C744 79 759 94 759 116Z
+                     M697 106H737C734 97 728 94 718 94C707 94 700 98 697 106Z" />
+            <path d="M770 151L794 83H839V151H818V101H809L792 151Z" />
+            <path d="M851 116C851 93 867 79 891 79C915 79 929 93 929 116C929 139 914 153 891 153C867 153 851 139 851 116Z
+                     M872 116C872 131 878 137 891 137C903 137 909 130 909 116C909 102 903 95 891 95C878 95 872 102 872 116Z" />
           </g>
         </svg>
         <Logo className="preloader__logo" eager decorative />

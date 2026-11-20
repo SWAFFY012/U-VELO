@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Clock, MapPin, MessageCircle, Phone, type LucideIcon } from "lucide-react";
-import { LocationMap, yandexMapsHref } from "@/components/pages/yandex-map";
+import { LocationMap } from "@/components/pages/yandex-map";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { site } from "@/lib/site";
@@ -53,6 +53,10 @@ export default function ContactsPage() {
               <dl className="divide-y divide-graphite-700 border-y border-graphite-700">
                 <Row icon={MapPin} label="Адрес">
                   {site.address}
+                  <a href={site.mapsHref} target="_blank" rel="noopener noreferrer" className={`${linkClass} mt-2 text-sm`}>
+                    Открыть в Яндекс Картах
+                    {newTabHint}
+                  </a>
                 </Row>
                 <Row icon={Clock} label="График работы">
                   <span className="nums">{site.hours}</span>
@@ -73,18 +77,7 @@ export default function ContactsPage() {
 
             </address>
 
-            <div className="flex flex-col gap-2">
-              <LocationMap />
-              <a
-                href={yandexMapsHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${linkClass} self-start text-[0.9375rem]`}
-              >
-                Открыть в Яндекс Картах
-                {newTabHint}
-              </a>
-            </div>
+            <LocationMap />
           </div>
         </Container>
       </section>

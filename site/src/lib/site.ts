@@ -3,7 +3,7 @@ export const site = {
   name: "Ю-Вело",
   legalName: "ООО «Ю-ВЕЛО»",
   tagline: "Аренда, выкуп и ремонт электровелосипедов",
-  url: "https://u-velo.vercel.app",
+  url: "https://u-velo.ru",
   inn: "4707064045",
   ogrn: "1264700009265",
   phone: "+7 (981) 535-22-02",

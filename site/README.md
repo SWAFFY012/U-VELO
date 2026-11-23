@@ -34,3 +34,20 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Hostland deployment
+
+The public site uses `https://u-velo.ru`. To prepare an upload from this directory:
+
+```bash
+npm ci
+npm run build:hostland
+```
+
+Upload `.hostland/uvelo-hostland-site.zip` to the Hostland Node.js application directory `/home/host1892387/u-velo.ru/projects/project` and extract it there, replacing the existing files. The archive contains `server.js`, `public/` and `tmp/restart.txt`; the last file triggers an application restart. Use `server.js` as the startup file and `public/` as the static directory.
+
+This package serves a static export with a dependency-free Node.js server. Application forms are currently disabled, so `/api/leads` is intentionally omitted from the export. Its source remains available for a future server deployment. Regular `npm run build` still builds the full Next.js application.
+
+The build uses a temporary staging directory and leaves the source unchanged. Generated uploads in `.hostland/` are ignored by Git. Tailwind is compiled through PostCSS for both regular and Hostland builds.
+
+Domain DNS points the root and `www` to `185.26.122.71`. Nameservers are configured at Reg.ru as `ns.hostland.ru` and `ns3.hostland.ru`. DNS propagation and successful SSL issuance must be verified before enabling an HTTP-to-HTTPS redirect. Existing Reg.ru mail records should be preserved separately from the website migration.
